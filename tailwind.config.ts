@@ -47,6 +47,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        piano: {
+          white: "hsl(var(--piano-white))",
+          "white-active": "hsl(var(--piano-white-active))",
+          black: "hsl(var(--piano-black))",
+          "black-active": "hsl(var(--piano-black-active))",
+        },
+        audio: {
+          active: "hsl(var(--audio-active))",
+          recording: "hsl(var(--audio-recording))",
+          background: "hsl(var(--audio-background))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +68,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        "gradient-studio": "var(--gradient-studio)",
+        "gradient-keys": "var(--gradient-keys)",
+        "gradient-active": "var(--gradient-active)",
+      },
+      boxShadow: {
+        "key": "var(--shadow-key)",
+        "active": "var(--shadow-active)",
+        "studio": "var(--shadow-studio)",
+      },
+      transitionDuration: {
+        "key": "100ms",
       },
       borderRadius: {
         lg: "var(--radius)",
