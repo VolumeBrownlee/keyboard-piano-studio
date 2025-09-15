@@ -1,10 +1,13 @@
 // Main thread audio engine wrapper
 // Manages AudioWorklet and exposes high-level API
 
+import { Sampler } from './sampler.js';
+
 export class AudioEngine {
   constructor() {
     this.audioContext = null;
     this.processorNode = null;
+    this.sampler = null;
     this.isReady = false;
     this.isRecording = false;
     this.masterGain = 0.7;
@@ -20,6 +23,10 @@ export class AudioEngine {
         latencyHint: 'interactive',
         sampleRate: 44100
       });
+      
+      // Initialize sampler
+      this.sampler = new Sampler(this.audioContext);
+      await this.sampler.initialize();
       
       // Load and register the AudioWorklet processor
       await this.audioContext.audioWorklet.addModule('/src/audio/processor.js');

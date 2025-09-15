@@ -1,9 +1,9 @@
 // Sample loading and caching system
 // Fetches CC0 piano samples, caches in IndexedDB, falls back to wavetables
 
-const SAMPLE_BASE_URL = '/samples/';
+const SAMPLE_BASE_URL = '/samples/piano/';
 const SAMPLE_FORMAT = '.wav';
-const DB_NAME = 'Key2PianoSamples';
+const DB_NAME = 'key2piano-samples-v1';
 const DB_VERSION = 1;
 const STORE_NAME = 'samples';
 
@@ -29,6 +29,7 @@ export class Sampler {
     this.isLoading = false;
     this.loadPromise = null;
     this.noteNames = generateNoteNames();
+    this.progressCallback = null;
   }
   
   async initialize() {
@@ -74,8 +75,22 @@ export class Sampler {
     });
   }
   
-  async loadSamples() {
-    const loadPromises = this.noteNames.map(note => this.loadSample(note));
+  async loadSamples(progressCallback) {
+    this.progressCallback = progressCallback;
+    let loaded = 0;
+    const total = this.noteNames.length;
+    
+    const loadPromises = this.noteNames.map(async (note) => {
+      try {
+        await this.loadSample(note);
+      } finally {
+        loaded++;
+        if (this.progressCallback) {
+          this.progressCallback(loaded, total);
+        }
+      }
+    });
+    
     await Promise.allSettled(loadPromises);
   }
   
@@ -224,6 +239,10 @@ export class Sampler {
   }
   
   getSample(note) {
+    return this.samples.get(note);
+  }
+  
+  getBuffer(note) {
     return this.samples.get(note);
   }
   

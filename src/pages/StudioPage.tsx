@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { StudioHeader } from '@/components/StudioHeader';
 import { Piano } from '@/components/Piano';
+import { SampleLoader } from '@/components/SampleLoader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { audioEngine } from '@/audio/engine.js';
 import { 
   Music, 
   Keyboard, 
@@ -212,6 +214,10 @@ export default function StudioPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SampleLoader 
+        sampler={audioEngine.sampler} 
+        onLoadingComplete={() => console.log('Sample cache ready')} 
+      />
       <StudioHeader activeTab={activeTab} onTabChange={setActiveTab} />
       
       <main className="max-w-7xl mx-auto p-6">
