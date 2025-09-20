@@ -77,10 +77,13 @@ export class Sampler {
   
   async loadSamples(progressCallback) {
     this.progressCallback = progressCallback;
-    let loaded = 0;
-    const total = this.noteNames.length;
     
-    const loadPromises = this.noteNames.map(async (note) => {
+    // Start with just the samples we have working downloads for
+    const availableNotes = ['E4', 'F4', 'G4', 'A4'];
+    let loaded = 0;
+    const total = availableNotes.length;
+    
+    const loadPromises = availableNotes.map(async (note) => {
       try {
         await this.loadSample(note);
       } finally {
